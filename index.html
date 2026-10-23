@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Birthday Surprise</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffe0ec, #e8ddff);
+            font-family: Georgia, serif;
+            color: #7d416b;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            padding: 25px;
+            max-width: 500px;
+            width: 92%;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .envelope {
+            position: relative;
+            width: 240px;
+            height: 155px;
+            margin: 45px auto 30px;
+            background: #f49ac2;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 12px 25px #a65c8833;
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 120px solid transparent;
+            border-right: 120px solid transparent;
+            border-top: 90px solid #f8b7d3;
+            transform-origin: top;
+            transition: transform 0.6s;
+            z-index: 2;
+        }
+
+        .envelope.open::before {
+            transform: rotateX(180deg);
+        }
+
+        .heart {
+            position: absolute;
+            top: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 45px;
+            z-index: 3;
+        }
+
+        .letter {
+            display: none;
+            background: #fffafd;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px #a65c8822;
+            animation: appear 0.8s ease;
+        }
+
+        .letter.show {
+            display: block;
+        }
+
+        button {
+            background: #d86ba0;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 22px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 8px;
+        }
+
+        .floating {
+            position: fixed;
+            bottom: -30px;
+            animation: floatUp 6s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>A Little Surprise for Fatima 🎂</h1>
+        <p>Someone has a special message for you...</p>
+
+        <div class="envelope" id="envelope" onclick="openLetter()">
+            <div class="heart">♥️</div>
+        </div>
+
+        <p id="hint">Tap the envelope to open it 💌</p>
+
+        <section class="letter" id="letter">
+            <h2>Happy Birthday, Fatima! 🎉</h2>
+            <p>Fatima,you make the world more beautiful just by being in it.g.</p>
+            <p>May your days be full of beautiful memories, love, and laughter.</p>
+            <p>You deserve all the wonderful things in the world. 💗</p>
+            <p>With lots of love, always. ✨</p>
+            <button onclick="makeHearts()">More Hearts! 💕</button>
+            <button onclick="toggleMusic()">Play Music 🎵</button>
+            <audio id="birthdayMusic" loop>
+    <source src="audio/birthday.mp3" type="audio/mpeg">
+</audio>s
+        </section>
+    </main>
+    <script>
+        function toggleMusic() {
+    const music = document.getElementById("birthdayMusic");
+
+    if (music.paused) {
+        music.play();
+    } else {
+        music.pause();
+    }
+}
+        function openLetter() {
+            document.getElementById("envelope").classList.add("open");
+            document.getElementById("letter").classList.add("show");
+            document.getElementById("hint").textContent = "A message made just for you 💗";
+            makeHearts();
+        }
+        function makeHearts() {
+            const symbols = ["💗", "💕", "✨", "🌸", "💖"];
+
+            for (let i = 0; i < 18; i++) {
+                const heart = document.createElement("span");
+                heart.className = "floating";
+                heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (3 + Math.random() * 4) + "s";
+                heart.style.fontSize = (18 + Math.random() * 20) + "px";
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 7000);
+            }
+        }
+    </script>
+</body>
+</html>
